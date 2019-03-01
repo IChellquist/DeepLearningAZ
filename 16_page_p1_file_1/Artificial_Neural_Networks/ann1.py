@@ -77,15 +77,17 @@ cm = confusion_matrix(y_test, y_pred)
 """
 # Part 4 - Evaluating, Improving, and Tuning the ANN
 
-#Evaluating the ANN
-from keras.wrappers.scikit_learn import KerasClassifier
-from sklearn.model_selection import cross_val_score
-def build_classifier():    
+#Evaluating the ANN using kfold cross validation to get a measure of variance in the ANN 20190301
+from keras.wrappers.scikit_learn import KerasClassifier #needed to wrap Keras object to be used by Sklearn
+from sklearn.model_selection import cross_val_score #Object that does the kfold cross validation
+def build_classifier(): #Contains neural network parameters from previous work in new function
     classifier = Sequential()
     classifier.add(Dense(output_dim = 6, init = 'uniform', activation = 'relu', input_dim = 11 ))
     classifier.add(Dense(output_dim = 6, init = 'uniform', activation = 'relu'))
     classifier.add(Dense(output_dim = 1, init = 'uniform', activation = 'sigmoid'))
     classifier.compile(optimizer = 'adam', loss = 'binary_crossentropy', metrics = ['accuracy']  )
     return classifier
-classifier = KerasClassifier(build_fn = build_classifier, batch_size = 10, epochs = 100 )
-accuracies = cross_val_score(estimator = classifier, X = X_train, y = y_train, cv = 10, n_jobs = -1 )
+classifier = KerasClassifier(build_fn = build_classifier, batch_size = 10, epochs = 100 ) #wrapper
+accuracies = cross_val_score(estimator = classifier, X = X_train, y = y_train, cv = 10, n_jobs = -1 ) #executes kfold cross validation
+mean = accuracies.mean() #computes the mean of the accuracies
+variance = accuracies.std() #computes the standard deviation of the accuracies
