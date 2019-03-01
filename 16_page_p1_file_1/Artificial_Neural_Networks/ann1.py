@@ -44,15 +44,18 @@ X_test = sc.transform(X_test)
 import keras
 from keras.models import Sequential
 from keras.layers import Dense
-"""
+from keras.layers import Dropout #Used to drop out neurons during training iterations
+
 #Initialising the ANN
 classifier = Sequential()
 
-#Adding the input layer and the first hidden layer
+#Adding the input layer and the first hidden layer with dropout
 classifier.add(Dense(output_dim = 6, init = 'uniform', activation = 'relu', input_dim = 11 ))
+classifier.add(Dropout(p = 0.1))
 
 #Adding the second hidden layer
 classifier.add(Dense(output_dim = 6, init = 'uniform', activation = 'relu'))
+classifier.add(Dropout(p = 0.1))
 
 #Adding the output layer
 classifier.add(Dense(output_dim = 1, init = 'uniform', activation = 'sigmoid'))
@@ -74,7 +77,7 @@ new_prediction = (new_prediction > 0.5)
 # Making the Confusion Matrix
 from sklearn.metrics import confusion_matrix
 cm = confusion_matrix(y_test, y_pred)
-"""
+
 # Part 4 - Evaluating, Improving, and Tuning the ANN
 
 #Evaluating the ANN using kfold cross validation to get a measure of variance in the ANN 20190301
@@ -91,3 +94,8 @@ classifier = KerasClassifier(build_fn = build_classifier, batch_size = 10, epoch
 accuracies = cross_val_score(estimator = classifier, X = X_train, y = y_train, cv = 10, n_jobs = -1 ) #executes kfold cross validation
 mean = accuracies.mean() #computes the mean of the accuracies
 variance = accuracies.std() #computes the standard deviation of the accuracies
+
+#Improving the ANN
+#Dropout regularization to reduce overfitting if needed
+
+#Tuning the ANN
