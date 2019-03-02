@@ -85,8 +85,8 @@ from keras.wrappers.scikit_learn import KerasClassifier #needed to wrap Keras ob
 from sklearn.model_selection import cross_val_score #Object that does the kfold cross validation
 def build_classifier(): #Contains neural network parameters from previous work in new function
     classifier = Sequential()
-    classifier.add(Dense(output_dim = 6, init = 'uniform', activation = 'relu', input_dim = 11 ))
-    classifier.add(Dense(output_dim = 6, init = 'uniform', activation = 'relu'))
+    classifier.add(Dense(output_dim = 11, init = 'uniform', activation = 'relu', input_dim = 11 ))
+    classifier.add(Dense(output_dim = 11, init = 'uniform', activation = 'relu'))
     classifier.add(Dense(output_dim = 1, init = 'uniform', activation = 'sigmoid'))
     classifier.compile(optimizer = 'adam', loss = 'binary_crossentropy', metrics = ['accuracy']  )
     return classifier
