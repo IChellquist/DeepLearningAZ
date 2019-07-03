@@ -1,0 +1,15 @@
+#!/usr/bin/env python3
+# -*- coding: utf-8 -*-
+"""
+Created on Wed Jul  3 06:37:50 2019
+
+@author: ianmc
+"""
+
+import network3
+from network3 import Network
+from network3 import ConvPoolLayer, FullyConnectedLayer, SoftmaxLayer
+
+net = Network([ConvPoolLayer(image_shape=(mini_batch_size, 1, 28, 28), filter_shape=(20, 1, 5, 5), poolsize=(2, 2)), FullyConnectedLayer(n_in=20*12*12, n_out=100),SoftmaxLayer(n_in=100, n_out=10)], mini_batch_size)
+net.SGD(training_data, 60, mini_batch_size, 0.1, validation_data, test_data)   
+
